@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AirTableApi.Dtos;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirTableApi.Controllers
@@ -19,8 +20,21 @@ namespace AirTableApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPedidos()
         {
-            var pedidos = await _airtableService.GetPedidosAsync();
-            return Ok(pedidos);
+            try
+            {
+                var records = await _airtableService.GetAllRecordsAsync();
+
+                var pedidos = records
+                    .Select(r => DtoPedido.MapAirtable(r.Fields))
+                    .ToList();
+
+                return Ok(pedidos);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { error = e.Message });
+            }
         }
+
     }
 }
