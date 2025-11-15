@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 using AirTableApi.Dtos;
 using Newtonsoft.Json;
@@ -6,9 +7,16 @@ using Newtonsoft.Json;
 public class AirtableService
 {
     private readonly HttpClient _httpClient;
+
+    // Info que traemos del Appjson para los valores de la tabla que llamaremos
+
     private readonly string _baseId;
     private readonly string _tableName;
     private readonly string _apiKey;
+
+
+    // nombre de la tabla que vamos a actualizar con el nro de pedido
+    private const string FIELD_TRACKING = "Número de rastreo";
 
     public AirtableService(IConfiguration config)
     {
@@ -21,6 +29,8 @@ public class AirtableService
             new AuthenticationHeaderValue("Bearer", _apiKey);
     }
 
+
+    // Esta funcion o metodo se encarga de gacer un get de la airtable a mi api, trayendo todos los valores correspondientes
     public async Task<List<AirtableRecord>> GetAllRecordsAsync()
     {
         var allRecords = new List<AirtableRecord>();
@@ -56,5 +66,30 @@ public class AirtableService
 
         return allRecords;
     }
+
+    // Este metodo se encarga de realizar un Put a la base de datos (Lo vamos a usar cuando tengamos que actualizar algun valor especifico)
+    public async Task<bool> UpdateTrackingNumber(string recordId, string trackingNumber)
+    {
+
+        var url = $"https://api.airtable.com/v0/{_baseId}/{_tableName}/{recordId}";
+
+
+
+        var body = new
+        {
+            fields = new Dictionary<string, object>
+        {
+            { "Numero de rastreo", trackingNumber }
+        }
+        };
+
+        var json = JsonConvert.SerializeObject(body);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = await _httpClient.PatchAsync(url, content);
+
+        return response.IsSuccessStatusCode;
+    }
+
 }
 
