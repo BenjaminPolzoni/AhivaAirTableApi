@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AirTableApi.Dtos
+namespace AirTableApi.Dtos.AirTable
 {
     public class AirtableRecord
     {

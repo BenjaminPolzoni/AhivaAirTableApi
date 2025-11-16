@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using AirTableApi.Dtos;
+using AirTableApi.Dtos.AirTable;
 using Newtonsoft.Json;
 
 public class AirtableService

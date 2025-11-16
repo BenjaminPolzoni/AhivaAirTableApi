@@ -1,4 +1,4 @@
-﻿using AirTableApi.Dtos;
+﻿using AirTableApi.Dtos.AirTable;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
