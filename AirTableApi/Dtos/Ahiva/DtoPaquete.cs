@@ -2,7 +2,7 @@
 {
     public class DtoPaquete
     {
-        public decimal Peso { get; set; }
+        public double Peso { get; set; }
         public string ResponsableServEntrega { get; set; }
         public string Empaque { get; set; }
         public string Almacenamiento { get; set; }

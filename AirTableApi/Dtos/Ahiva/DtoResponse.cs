@@ -6,7 +6,14 @@
         public string DescripcionRespuesta { get; set; }
         public bool EsError { get; set; }
 
-        public List<DtoEnvioRespuesta> Envios { get; set; } = new();
+        // Lista de códigos de seguimiento / tracking (para carga masiva)
+        public List<string>? Tracking { get; set; }
+
+        // Costo estimado o total calculado por AHIVA
+        public double? CostoEstimado { get; set; }
+
+        // Solo para Consultar Estado
+        public string? Estado { get; set; }
     }
 
     public class DtoEnvioRespuesta

@@ -1,3 +1,5 @@
+using AirTableApi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,6 +13,7 @@ builder.Services.AddSwaggerGen();
 // Metemos en el builder los controllers
 
 builder.Services.AddSingleton<AirtableService>();
+builder.Services.AddScoped<AhivaService>();
 
 var app = builder.Build();
 
