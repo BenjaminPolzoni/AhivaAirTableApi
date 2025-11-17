@@ -26,6 +26,26 @@ namespace AirTableApi.Services
             _subcuenta = config["Ahiva:Subcuenta"]!;
         }
 
+        private void ValidarCredenciales()
+        {
+            var user = _config["Ahiva:User"];
+            var pass = _config["Ahiva:Password"];
+            var cuenta = _config["Ahiva:Cuenta"];
+            var subcuenta = _config["Ahiva:Subcuenta"];
+
+            if (string.IsNullOrWhiteSpace(user))
+                throw new Exception("Falta configurar Ahiva:User en appsettings.");
+
+            if (string.IsNullOrWhiteSpace(pass))
+                throw new Exception("Falta configurar Ahiva:Password en appsettings.");
+
+            if (string.IsNullOrWhiteSpace(cuenta))
+                throw new Exception("Falta configurar Ahiva:Cuenta en appsettings.");
+
+            if (string.IsNullOrWhiteSpace(subcuenta))
+                throw new Exception("Falta configurar Ahiva:Subcuenta en appsettings.");
+        }
+
         // =======================================================
         //  1) CARGA MASIVA
         // =======================================================
@@ -33,6 +53,8 @@ namespace AirTableApi.Services
         {
             try
             {
+                ValidarCredenciales();
+
                 var client = new CargaMasivaServicev4Client(
                     CargaMasivaServicev4Client.EndpointConfiguration.CargaMasivaServicev4Port);
 
@@ -149,6 +171,8 @@ namespace AirTableApi.Services
         {
             try
             {
+                ValidarCredenciales();
+
                 var client = new ConsultarEstadosServiceClient(
                     ConsultarEstadosServiceClient.EndpointConfiguration.ConsultarEstadosServicePort);
 
